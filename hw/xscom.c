@@ -607,7 +607,9 @@ static void xscom_init_chip_info(struct proc_chip *chip)
 	if (proc_gen == proc_gen_p9 && chip->ec_level == 0x10) {
 		uint64_t ecid2 = 0;
 		uint8_t rev;
-		xscom_read(chip->id, 0x18002, &ecid2);
+		/* HACK this read causes read error and xscom
+			unit hang on AIO */
+		/*xscom_read(chip->id, 0x18002, &ecid2);*/
 		switch((ecid2 >> 45) & 7) {
 		case 0:
 			rev = 0;
